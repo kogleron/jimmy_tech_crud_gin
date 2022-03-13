@@ -1,0 +1,261 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a test for the job.",
+        "title": "Yet another CRUD service",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/articles": {
+            "get": {
+                "produces": [
+                    "application/json",
+                    "text/xml"
+                ],
+                "summary": "Retrieves articles",
+                "parameters": [
+                    {
+                        "enum": [
+                            "id",
+                            "title",
+                            "body"
+                        ],
+                        "type": "string",
+                        "description": "By which column to order articles",
+                        "name": "orderBy",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ],
+                        "type": "string",
+                        "description": "Order direction",
+                        "name": "orderDir",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "From which article to retrieve.",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "From which article to retrieve.",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "The number of articles to retrieve.",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Article"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json",
+                    "text/xml"
+                ],
+                "produces": [
+                    "application/json",
+                    "text/xml"
+                ],
+                "summary": "Creates an article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token (auth_token_xxx)",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "description": "Data of an article",
+                        "name": "article",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateArticleInput"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/articles/{id}": {
+            "get": {
+                "description": "Allows to get an article in different formats (json, xml)",
+                "produces": [
+                    "application/json",
+                    "text/xml"
+                ],
+                "summary": "Retrieves an article",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Article"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "consumes": [
+                    "application/json",
+                    "text/xml"
+                ],
+                "produces": [
+                    "application/json",
+                    "text/xml"
+                ],
+                "summary": "Update an article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token (auth_token_xxx)",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Data of an article",
+                        "name": "article",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UpdateArticleInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Article"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json",
+                    "text/xml"
+                ],
+                "summary": "Deletes an article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token (auth_token_xxx)",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Article ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Article": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateArticleInput": {
+            "type": "object",
+            "required": [
+                "body",
+                "title"
+            ],
+            "properties": {
+                "body": {
+                    "type": "string",
+                    "maxLength": 65535
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "models.UpdateArticleInput": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string",
+                    "maxLength": 65535
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        }
+    }
+}

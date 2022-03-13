@@ -1,0 +1,64 @@
+version: "3.9"
+services:
+  # Go main container
+  go:
+    container_name: jimmy_go
+    image: kogleron/jimmy-go
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    depends_on:
+      mysql:
+        condition: service_healthy
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    working_dir: /app
+    ports:
+      - "8085:8085"
+    networks:
+      - jimmy
+  # MySQL container
+  mysql:
+    # For mac M1
+    platform: linux/amd64
+    container_name: "jimmy_mysql"
+    image: "mysql:latest"
+    restart: unless-stopped
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 2s
+      retries: 10
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=no
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./seed/articles.sql:/docker-entrypoint-initdb.d/articles.sql
+    ports:
+      - "3307:3306"
+    networks:
+      - jimmy
+networks:
+  jimmy:
+volumes:
+  jimmy:
+    driver: local
+  mysql:
+    driver: local

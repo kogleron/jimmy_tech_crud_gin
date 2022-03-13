@@ -1,0 +1,177 @@
+basePath: /
+definitions:
+  models.Article:
+    properties:
+      body:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.CreateArticleInput:
+    properties:
+      body:
+        maxLength: 65535
+        type: string
+      title:
+        maxLength: 255
+        type: string
+    required:
+    - body
+    - title
+    type: object
+  models.UpdateArticleInput:
+    properties:
+      body:
+        maxLength: 65535
+        type: string
+      title:
+        maxLength: 255
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a test for the job.
+  termsOfService: http://swagger.io/terms/
+  title: Yet another CRUD service
+  version: "1.0"
+paths:
+  /articles:
+    get:
+      parameters:
+      - description: By which column to order articles
+        enum:
+        - id
+        - title
+        - body
+        in: query
+        name: orderBy
+        type: string
+      - description: Order direction
+        enum:
+        - asc
+        - desc
+        in: query
+        name: orderDir
+        type: string
+      - description: From which article to retrieve.
+        in: query
+        name: offset
+        type: integer
+      - description: From which article to retrieve.
+        in: query
+        name: offset
+        type: integer
+      - description: The number of articles to retrieve.
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      - text/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Article'
+            type: array
+      summary: Retrieves articles
+    post:
+      consumes:
+      - application/json
+      - text/xml
+      parameters:
+      - description: Access token (auth_token_xxx)
+        in: query
+        name: token
+        required: true
+        type: string
+      - description: Data of an article
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateArticleInput'
+      produces:
+      - application/json
+      - text/xml
+      responses: {}
+      summary: Creates an article
+  /articles/{id}:
+    delete:
+      parameters:
+      - description: Access token (auth_token_xxx)
+        in: query
+        name: token
+        required: true
+        type: string
+      - description: Article ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      - text/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+      summary: Deletes an article
+    get:
+      description: Allows to get an article in different formats (json, xml)
+      parameters:
+      - description: Article ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      - text/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Article'
+      summary: Retrieves an article
+    put:
+      consumes:
+      - application/json
+      - text/xml
+      parameters:
+      - description: Access token (auth_token_xxx)
+        in: query
+        name: token
+        required: true
+        type: string
+      - description: Article ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Data of an article
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateArticleInput'
+      produces:
+      - application/json
+      - text/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Article'
+      summary: Update an article
+schemes:
+- http
+swagger: "2.0"

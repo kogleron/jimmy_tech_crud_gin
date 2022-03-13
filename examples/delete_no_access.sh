@@ -1,0 +1,1 @@
+curl -v -X DELETE http://localhost:8085/articles/1
