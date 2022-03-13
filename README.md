@@ -2,7 +2,7 @@
 
 ### Run the project
 
-For starting the service in the project dir exec `make docker`.
+For starting the service in the project dir exec `cp .env.example .env && make docker`.
 
 ### Read the docs and test
 
