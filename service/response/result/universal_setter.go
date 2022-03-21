@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
 	intrnlerr "jimmy_tech_crud_gin/internal/errors"
 )
 

@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+
 	"jimmy_tech_crud_gin/config"
 	"jimmy_tech_crud_gin/middleware"
 	"jimmy_tech_crud_gin/routes"

@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+
 	"jimmy_tech_crud_gin/config"
-	// Need for swagger docs
 	_ "jimmy_tech_crud_gin/docs"
 )
 

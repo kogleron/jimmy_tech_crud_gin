@@ -16,7 +16,6 @@ linters:
   enable:
     - govet
     - exportloopref
-    - revive
   disable:
     - wrapcheck
     - ireturn
@@ -29,3 +28,5 @@ linters:
     - golint
     - interfacer
     - godot
+    - gci
+    - revive

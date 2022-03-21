@@ -5,6 +5,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql" // Need for db driver
+
 	"jimmy_tech_crud_gin/config"
 )
 
