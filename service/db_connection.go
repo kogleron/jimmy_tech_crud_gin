@@ -10,13 +10,10 @@ import (
 )
 
 // ConnectDB connects to database.
-func ConnectDB() (*gorm.DB, error) {
-	connectionString, driver, err := createConnectionString()
-	if err != nil {
-		return nil, err
-	}
+func ConnectDB(conf config.SQLConf) (*gorm.DB, error) {
+	connectionString := buildConnectionString(conf)
 
-	db, err := gorm.Open(driver, connectionString)
+	db, err := gorm.Open(conf.Driver, connectionString)
 	if err != nil {
 		return nil, err
 	}
@@ -25,12 +22,7 @@ func ConnectDB() (*gorm.DB, error) {
 }
 
 // Creates string for SQL connection.
-func createConnectionString() (string, string, error) {
-	conf, err := config.GetSQLConf()
-	if nil != err {
-		return "", "", err
-	}
-
+func buildConnectionString(conf config.SQLConf) string {
 	return fmt.Sprintf(
 		"%s:%s@(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
 		conf.User,
@@ -38,5 +30,5 @@ func createConnectionString() (string, string, error) {
 		conf.Host,
 		conf.Port,
 		conf.Database,
-	), conf.Driver, nil
+	)
 }

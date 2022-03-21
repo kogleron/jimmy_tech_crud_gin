@@ -19,6 +19,7 @@ lint:
 install:
 	@echo "Install required programs"
 	$(GO) $(GOFLAG) install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	$(GO) $(GOFLAG) install golang.org/x/tools/cmd/goimports@latest
 	$(GO) $(GOFLAG) install mvdan.cc/gofumpt@latest
 	$(GO) $(GOFLAG) install github.com/vektra/mockery/v2@latest
 	$(GO) $(GOFLAG) get -v github.com/incu6us/goimports-reviser

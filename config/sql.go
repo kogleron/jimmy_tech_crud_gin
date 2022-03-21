@@ -14,7 +14,7 @@ type SQLConf struct {
 	Password string
 }
 
-func GetSQLConf() (*SQLConf, error) {
+func GetDBConf() (*SQLConf, error) {
 	port, err := strconv.ParseInt(os.Getenv("MYSQL_PORT"), 10, 64) //nolint:gomnd
 	if nil != err {
 		return nil, err

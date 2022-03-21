@@ -35,7 +35,12 @@ func main() { //nolint:funlen
 
 	tokenAuthConf := config.GetTokenAuthConf()
 
-	db, err := service.ConnectDB()
+	dbConf, err := config.GetDBConf()
+	if err != nil {
+		log.Panic(err)
+	}
+
+	db, err := service.ConnectDB(*dbConf)
 	if err != nil {
 		log.Panic(err)
 	}
